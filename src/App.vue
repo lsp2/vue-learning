@@ -4,22 +4,28 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div class="page-container">
-    <header>
-        <nav>
-          <RouterLink to="/">NoteList</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
-        </nav>
-    </header>
+  <div class="container">
 
-    <RouterView />
+    <ul class="layui-nav layui-nav-tree">
+      <li class="layui-nav-item"><RouterLink to="/">备忘录</RouterLink></li>
+      <li class="layui-nav-item"><RouterLink to="/about">About</RouterLink></li>
+    </ul>
+    <div class="content-box">
+         <RouterView />
+    </div>
+ 
   </div>
 
 </template>
 
 <style scoped>
-.page-container{
-  display:grid;
-  grid-template-rows: 80px auto;
+.container{
+  display:flex;
+  min-height: 100vh;
+  flex-direction: row;
+}
+.content-box{
+  flex: auto;
+  padding:1rem 2rem;
 }
 </style>
