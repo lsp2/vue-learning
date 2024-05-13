@@ -37,7 +37,7 @@ const clickLevel = (id, newLevel)=>{
 <style scoped>
 .item-background{
     background-color:#fefefe;
-    box-shadow:1px 1px 3px #ddd
+    box-shadow:1px 1px 3px 1px #ddd
 }
 .item-background:not(last-child){
   margin-bottom:0.8rem;

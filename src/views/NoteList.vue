@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import NoteItem from '../components/NoteItem.vue'
 
 let notes = ref([
@@ -55,9 +55,7 @@ const sortObjArray = (arr, judgeKey, increse)=>{
     let right = sortObjArray(arr.slice(mid), judgeKey, increse)
     return mergeArray(left, right, judgeKey, increse)
 }
-const mergeArray = (left, right, judgeKey, increse)=>{
-
-    
+const mergeArray = (left, right, judgeKey, increse)=>{    
     let index_l = 0, index_r = 0
     let arr = []
     while(index_l < left.length && index_r < right.length){ 
@@ -73,6 +71,7 @@ const mergeArray = (left, right, judgeKey, increse)=>{
     return arr.concat(left.slice(index_l)).concat(right.slice(index_r))
 }
 
+//评论顺序
 let sortKey = ref('datetime')
 let increseSort = ref(-1)
 notes.value = sortObjArray(notes.value, sortKey.value, increseSort.value)
@@ -83,14 +82,40 @@ watch(increseSort, (newValue, oldValue) => {
     notes.value = sortObjArray(notes.value, sortKey.value, newValue)
 })
 
+onMounted(()=> {
+    document.getElementById("criticButton").addEventListener("click", function(){
+        let input = document.getElementById("criticInput")
+        if ( !input || input.value === "") {
+            return 
+        }
+        notes.value.push({
+            "id": Math.floor(Math.random()*1000) + 1000 + "",
+            "datetime": new Date(),
+            "content": input.value,
+            "level": 0,
+        })
+        input.value = ""
+        notes.value = sortObjArray(notes.value, sortKey.value, increseSort.value)
+    }) 
+})
+
+
 </script>
 
 <template>
 <div class="grid-container">
+    <div class="edit-area">
+        <form class="layui-form">
+            <textarea id="criticInput" name="critic" placeholder="在此输入内容" class="layui-textarea"></textarea>
+        </form>
+        <div class="sending-area">
+            <button id="criticButton" type="button" class="layui-btn layui-border-green">发送</button>
+        </div>              
+    </div>  
     <div class="head">
         <div class="head-item" id="sort-key">
             <lay-radio-button v-model="sortKey" :value="'datetime'" label="时间"></lay-radio-button>
-        <lay-radio-button v-model="sortKey" :value="'level'" label="评分"></lay-radio-button>
+            <lay-radio-button v-model="sortKey" :value="'level'" label="评级"></lay-radio-button>
         </div>
         <div class="head-item" id="sort-order">
             <lay-select v-model="increseSort" placeholder="请选择">
@@ -99,7 +124,7 @@ watch(increseSort, (newValue, oldValue) => {
             </lay-select> 
         </div>
     </div>
-    <div class="content">
+    <div class="content" @click="sendCritic">
         <div v-if="notes.length>0">
             <div v-for="item in notes" :key="item._id">
                 <NoteItem :note="item" @updateLevel="updateLevel"/>
@@ -114,7 +139,16 @@ watch(increseSort, (newValue, oldValue) => {
 
 .grid-container{
     display: grid;
-    grid-template-rows: 70px auto;
+    grid-template-rows: 8rem 4rem auto;
+}
+.edit-area{
+    display:grid;
+    grid-row-gap: 0.8rem;
+    border-bottom: 1px solid #eee;
+}
+.sending-area{
+    display: flex;
+    justify-content: end;
 }
 .head{
     margin-bottom: 1rem;
@@ -124,6 +158,10 @@ watch(increseSort, (newValue, oldValue) => {
 }
 .head-item{
    
+}
+.layui-textarea{
+    width: 100%;
+    height:100%
 }
 #sort-order{
     display: grid;
