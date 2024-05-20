@@ -9,6 +9,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <ul class="layui-nav layui-nav-tree">
       <li class="layui-nav-item"><RouterLink to="/">备忘录</RouterLink></li>
       <li class="layui-nav-item"><RouterLink to="/about">About</RouterLink></li>
+      <li class="layui-nav-item"><RouterLink to="/new">New</RouterLink></li>
     </ul>
     <div class="content-box">
          <RouterView />
