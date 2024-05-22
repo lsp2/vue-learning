@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, defineEmits } from 'vue'
+import { computed } from 'vue'
 import ButtonSlot from './ButtonSlot.vue'
 
 const props = defineProps(['note'])
@@ -9,7 +9,7 @@ const datetext = computed(()=>{
   return new Intl.DateTimeFormat("zh", { dateStyle: "medium" }).format(props.note.datetime);
 })
 
-const clickLevel = (id, newLevel)=>{
+const clickLevel = (id: string, newLevel: string)=>{
   emit('updateLevel', id, newLevel)
 }
 

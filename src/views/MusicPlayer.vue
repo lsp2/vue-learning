@@ -23,11 +23,13 @@ async function searchSong() {
   }
 }
 
-async function getSong(id) {
+let song = ref({})
+
+async function getSong(id: string) {
   // console.log(id);
   let res = await api.info(id)
-
-  console.log(res);
+  song.value = res
+  console.log(song.value);
   
 }
 
@@ -49,7 +51,7 @@ async function getSong(id) {
     </div>
     <div class="player">
       <div class="progress"></div>
-      <div class="album-cover"><img src="" alt=""></div>
+      <div class="album-cover"><img :src="song.album_img" alt=""></div>
       <div>
         <div></div>
         <div></div>
@@ -128,5 +130,14 @@ async function getSong(id) {
   bottom: 0;
   background: #fff;
   box-shadow: 0 0 3px 2px #ddd;
+  .album-cover{
+    height:5rem;
+    width:5rem;
+    img{
+      display: block;
+      width: 5rem;
+      height: 5rem;
+    }
+  }
 }
 </style>
