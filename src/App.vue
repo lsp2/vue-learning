@@ -6,6 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <div class="container">
     <ul class="layui-nav layui-nav-tree nav">
       <li class="layui-nav-item"><RouterLink to="/">备忘录</RouterLink></li>
+      <li class="layui-nav-item"><RouterLink to="/new">New</RouterLink></li>
       <li class="layui-nav-item"><RouterLink to="/music">音乐库</RouterLink></li>
     </ul>
     <div class="content-box">
@@ -21,7 +22,8 @@ import { RouterLink, RouterView } from 'vue-router'
   flex-direction: row;
 }
 .content-box{
-  flex: auto;
+  display: block;
+  width: 100%
 }
 .nav{
   z-index: 999;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
-import NoteItem from '../components/NoteItem.vue'
+import NoteItem from '@/components/NoteItem.vue'
 
 let notes = ref([
     {

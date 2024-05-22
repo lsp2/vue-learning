@@ -1,39 +1,75 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
-// 必选参数:
+import  api  from '@/api/index.ts'
+import SongList from '@/components/SongList.vue'
 
-// keyword : 关键字
+let songList = ref([])
 
-//接口地址: http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=%E7%8E%8B%E5%8A%9B%E5%AE%8F&page=1&pagesize=20&showtype=1
+let page = 1
+const pagesize = 20
 
+async function searchSong() {
+  let input = document.getElementById("search-input").value
+  // console.log(input);
+  
+  if( input === "" || input === undefined){
+    return
+  }
+  let res = await api.search(input, page, pagesize)
+  // console.log(res);
+  
+  if(res.data.info !== undefined){
+    songList.value = res.data.info
+  }
+}
 
+async function getSong(id) {
+  // console.log(id);
+  let res = await api.info(id)
+
+  console.log(res);
+  
+}
 
 </script>
 
 <template>
-<div class="container">
-  <div class="top">
-    <div></div>
-    <div>
-      <input type="text" name="" id="search-input">
-      <button id="search-button">搜索</button>
+<div>
+  <div class="container">
+    <div class="top">
+      <div></div>
+      <div>
+        <input type="text" name="" id="search-input">
+        <button id="search-button" @click="searchSong">搜索</button>
+      </div>
+      <div></div>
     </div>
-    <div></div>
-  </div>
-  <div class="result-list">
-    
-  </div>
-  <div class="player">
-    dd
-  </div>
+    <div class="result-list">
+      <SongList :list="songList" @choose-song="getSong"/>
+    </div>
+    <div class="player">
+      <div class="progress"></div>
+      <div class="album-cover"><img src="" alt=""></div>
+      <div>
+        <div></div>
+        <div></div>
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div> 
+
 </div>
+
 
 </template>
 
 <style scoped>
 .conatiner{
   background-color: #333;
-  width: 100vh;
+  width: 100%;
+  grid-template-rows: 5rem auto;
   /* overflow: hidden; */
 }
 .top{
@@ -41,7 +77,7 @@ import { ref, watch, onMounted } from 'vue'
   width: 100%;
   border-bottom: 1px solid #ddd;
   display: grid;
-  grid-template-columns: 50% auto 10%;
+  grid-template-columns: 30% auto 30%;
   gap: 1rem;
   align-items: center;
   div{
@@ -82,11 +118,15 @@ import { ref, watch, onMounted } from 'vue'
   }
 
 }
+.result-list{
+  width:100%;
+}
 .player{
   height: 5rem;
   width: 100%;
   position: fixed;
   bottom: 0;
+  background: #fff;
   box-shadow: 0 0 3px 2px #ddd;
 }
 </style>
