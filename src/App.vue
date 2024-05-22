@@ -1,22 +1,18 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <div class="container">
-
-    <ul class="layui-nav layui-nav-tree">
+    <ul class="layui-nav layui-nav-tree nav">
       <li class="layui-nav-item"><RouterLink to="/">备忘录</RouterLink></li>
-      <li class="layui-nav-item"><RouterLink to="/about">About</RouterLink></li>
       <li class="layui-nav-item"><RouterLink to="/new">New</RouterLink></li>
+      <li class="layui-nav-item"><RouterLink to="/music">音乐库</RouterLink></li>
     </ul>
     <div class="content-box">
          <RouterView />
     </div>
- 
   </div>
-
 </template>
 
 <style scoped>
@@ -27,6 +23,8 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 .content-box{
   flex: auto;
-  padding:1rem 2rem;
+}
+.nav{
+  z-index: 999;
 }
 </style>

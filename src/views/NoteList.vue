@@ -140,6 +140,7 @@ onMounted(()=> {
 .grid-container{
     display: grid;
     grid-template-rows: 8rem 4rem auto;
+    margin: 3rem;
 }
 .edit-area{
     display:grid;
