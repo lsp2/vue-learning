@@ -22,7 +22,8 @@ import { RouterLink, RouterView } from 'vue-router'
   flex-direction: row;
 }
 .content-box{
-  flex: auto;
+  display: block;
+  width: 100%
 }
 .nav{
   z-index: 999;
